@@ -1,0 +1,45 @@
+{
+  "manifestVersion": 2,
+  "id": "today-panel",
+  "name": "Nova",
+  "version": "0.4.0",
+  "description": "Nova SBE daily dashboard for Orca: today's schedule, open tasks with status bars and their requirements, deadlines, unread Nova mail, and your Mac calendars in the Calendar plugin's original design (MIT, Bautista Pessagno). Read-only.",
+  "engines": {
+    "orca": ">=1.4.248"
+  },
+  "execution": "trusted-worker",
+  "pluginApi": 1,
+  "main": "src/worker.ts",
+  "contributes": {
+    "panels": [
+      {
+        "id": "today-panel",
+        "title": "Nova",
+        "icon": "calendar",
+        "entry": "calendar/panel/nova.html",
+        "ui": "html"
+      }
+    ],
+    "commands": [
+      {
+        "id": "nova.show",
+        "title": "Nova: show the right sidebar",
+        "action": "sidebar.right.toggle"
+      }
+    ],
+    "statusBarItems": [
+      {
+        "id": "nova-status",
+        "text": "Nova",
+        "icon": "calendar",
+        "tooltip": "Nova tasks: open the Nova panel in the right sidebar",
+        "command": "nova.show"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "kind": "storage:own"
+    }
+  ]
+}

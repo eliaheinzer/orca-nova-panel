@@ -1,0 +1,113 @@
+/* Nova's own parts of the panel. The calendar's original stylesheet (inline in the page, unchanged)
+   sets the canvas: SF font stack, Orca theme colours, Google/Apple calendar accents. Everything here
+   is prefixed `nv-` so it never touches the original calendar's classes. */
+
+.nv-tabs {
+  display: flex; gap: 2px; padding: 8px 8px 6px; margin: 0;
+  border-bottom: 1px solid var(--line); background: var(--bg);
+  overflow-x: auto; scrollbar-width: none;
+}
+.nv-tabs::-webkit-scrollbar { display: none; }
+.nv-tab {
+  border: 0; background: none; border-radius: 999px; padding: 5px 10px;
+  font-size: 12.5px; font-weight: 500; color: var(--muted); white-space: nowrap;
+}
+.nv-tab:hover { background: var(--hover); color: var(--fg); }
+.nv-tab[aria-selected='true'] { background: var(--fg); color: var(--bg); }
+.nv-tab .nv-count { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 3px; }
+
+.nv-view { padding: 10px 10px 24px; display: grid; gap: 14px; }
+.nv-head { display: flex; align-items: baseline; gap: 8px; padding: 2px 4px 0; }
+.nv-head h1 { flex: 1; margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.2px; }
+.nv-head h2 { flex: 1; margin: 0; font-size: 15px; font-weight: 600; }
+.nv-greet { padding: 0 4px; color: var(--muted); font-size: 13px; margin-top: -8px; }
+.nv-back { border: 0; background: none; color: var(--today); font-size: 12.5px; padding: 2px 0; justify-self: start; }
+.nv-back:hover { text-decoration: underline; }
+.nv-icon-btn { width: 28px; height: 28px; border: 0; border-radius: 50%; background: none; color: var(--muted); display: grid; place-items: center; }
+.nv-icon-btn:hover { background: var(--hover); color: var(--fg); }
+.nv-icon-btn.spin svg { animation: spin 0.9s linear infinite; }
+
+.nv-section { display: grid; gap: 6px; }
+.nv-section > .nv-title {
+  display: flex; align-items: center; gap: 6px; padding: 0 4px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted);
+}
+.nv-section > .nv-title .nv-more { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 12px; color: var(--today); border: 0; background: none; padding: 0; }
+.nv-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+}
+.nv-card.pad { padding: 10px 12px; }
+.nv-rows > * + * { border-top: 1px solid var(--line); }
+.nv-row {
+  display: grid; gap: 3px; padding: 9px 12px; width: 100%; text-align: left;
+  border: 0; background: none; border-radius: 0;
+}
+button.nv-row:hover { background: var(--hover); }
+.nv-row .nv-line { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.nv-row .nv-t { flex: 1; min-width: 0; font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nv-row .nv-t.wrap { white-space: normal; }
+.nv-row .nv-s { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nv-row .nv-s.wrap { white-space: normal; }
+.nv-empty { padding: 12px; color: var(--muted); font-size: 12.5px; text-align: center; }
+.nv-src { padding: 0 4px; color: var(--muted); font-size: 11.5px; }
+
+/* countdown pill: never wraps */
+.nv-pill {
+  flex: none; white-space: nowrap; font-variant-numeric: tabular-nums;
+  font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 999px;
+  background: var(--hover); color: var(--muted);
+}
+.nv-pill.red { background: rgba(234, 67, 53, 0.14); color: var(--now); }
+.nv-pill.amber { background: var(--warn-bg); color: var(--warn-fg); }
+.nv-pill.green { background: rgba(24, 128, 56, 0.12); color: var(--ok); }
+
+/* status bar per deadline: length = stage, colour = time left */
+.nv-bar { height: 6px; border-radius: 3px; background: var(--hover); overflow: hidden; }
+.nv-bar > span { display: block; height: 100%; border-radius: 3px; background: var(--today); }
+.nv-bar.red > span { background: var(--now); }
+.nv-bar.amber > span { background: #f9ab00; }
+.nv-bar.green > span { background: var(--ok); }
+.nv-stage { font-size: 11.5px; color: var(--muted); display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+.nv-stage b { font-weight: 600; color: var(--fg); }
+.nv-stage .nv-ov { color: var(--today); font-weight: 600; }
+
+.nv-task { padding: 10px 12px; display: grid; gap: 5px; }
+.nv-task + .nv-task { border-top: 1px solid var(--line); }
+.nv-task .nv-open-btn { justify-self: start; border: 0; background: none; padding: 2px 0; color: var(--today); font-size: 12.5px; font-weight: 500; }
+.nv-task select { height: 24px; font-size: 11.5px; border: 1px solid var(--input); border-radius: 6px; background: var(--bg); padding: 0 4px; }
+.nv-task .nv-tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.nv-pack { display: grid; gap: 8px; padding: 8px 10px; border-radius: 10px; background: var(--hover); font-size: 12.5px; }
+.nv-pack h3 { margin: 4px 0 0; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); }
+.nv-pack h4 { margin: 2px 0; font-size: 12.5px; }
+.nv-pack p, .nv-pack ul, .nv-pack ol, .nv-pack blockquote { margin: 0; }
+.nv-pack ul, .nv-pack ol { padding-left: 18px; }
+.nv-pack blockquote { padding-left: 8px; border-left: 2px solid var(--line); color: var(--muted); }
+.nv-pack code { font-size: 11.5px; background: var(--bg); padding: 0 3px; border-radius: 4px; }
+.nv-pack .nv-link { color: var(--today); }
+.nv-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.nv-btn { height: 26px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); font-size: 12px; font-weight: 500; }
+.nv-btn:hover { background: var(--hover); }
+.nv-btn.primary { background: var(--today); border-color: var(--today); color: var(--on-today); }
+
+.nv-chips { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 2px; }
+.nv-chip { height: 26px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); font-size: 12px; white-space: nowrap; }
+.nv-chip[aria-pressed='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.nv-unread { width: 8px; height: 8px; border-radius: 50%; background: var(--today); flex: none; align-self: center; }
+
+.nv-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; padding: 8px; }
+.nv-wd { border: 0; background: none; border-radius: 10px; padding: 6px 0; display: grid; justify-items: center; gap: 3px; }
+.nv-wd:hover { background: var(--hover); }
+.nv-wd .d { font-size: 10px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); }
+.nv-wd .n { font-size: 15px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; }
+.nv-wd.today .d { color: var(--today); }
+.nv-wd.today .n { background: var(--today); color: var(--on-today); font-weight: 500; }
+.nv-wd .dots { display: flex; gap: 2px; min-height: 6px; }
+.nv-wd .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.nv-wd .dots i.red { background: var(--now); }
+.nv-wd .dots i.amber { background: #f9ab00; }
+.nv-wd .dots i.green { background: var(--ok); }
+
+.nv-sched { padding-bottom: 4px; }
+.nv-sched .day { border-top: 0; }
+.nv-banner { padding: 8px 12px; border-radius: 10px; background: var(--warn-bg); color: var(--warn-fg); font-size: 12.5px; }
